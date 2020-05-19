@@ -15,7 +15,7 @@ after_success:
   - docker build -t fenrir28/multi-server ./server
   - docker build -t fenrir28/multi-worker ./worker
   # Login to docker hub
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD"
   # Push images to docker hub
   - docker push fenrir28/multi-client
   - docker push fenrir28/multi-nginx
