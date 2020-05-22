@@ -15,9 +15,21 @@ after_success:
   - docker build -t fenrir28/multi-server ./server
   - docker build -t fenrir28/multi-worker ./worker
   # Login to docker hub
-  - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push images to docker hub
   - docker push fenrir28/multi-client
   - docker push fenrir28/multi-nginx
   - docker push fenrir28/multi-server
   - docker push fenrir28/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: Multidocker=env
+  bucket_name: elasticbeanstalk-us-east-1-523309498728
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
