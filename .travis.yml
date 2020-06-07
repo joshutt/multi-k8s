@@ -18,7 +18,7 @@ before_install:
   - docker build -t fenrir28/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true fenrir28/react-test npm run test -- --coverage
+  - docker run -e CI=true fenrir28/react-test npm run test
 
 deploy:
   provider: script
